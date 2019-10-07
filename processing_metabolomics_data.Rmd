@@ -4,7 +4,7 @@ author: "Johannes Rainer<br><strong>Eurac Research</strong>, Bolzano, Italy<br>j
 date: "SWEMSA 2019"
 output: 
   ioslides_presentation:
-    widescreen: true
+    widescreen: false
     fig_width: 7
     fig_height: 5
     fig_retina: 2
@@ -66,6 +66,12 @@ knitr::include_graphics("images/Rlogo.png")
 
 ```{r out.width = "480px", echo = FALSE}
 knitr::include_graphics("images/metaRbolomics.png")
+```
+</div>
+
+<div style="position:absolute; left:30%; top:40%;">
+```{r out.width = "350px", echo = FALSE}
+knitr::include_graphics("images/mass_spec_pkgs.png")
 ```
 </div>
 
@@ -158,60 +164,6 @@ data <- data %>%
 
 <div>- How does that work?</div>
 <div>- *Lazy evaluation queue*: data manipulations applied on-the-fly.</div>
-
-
-## MS data handling with `MSnbase`
-
-- Data organized by spectrum.
-
-<div style="position:absolute; left:20%; top:40%">
-```{r out.width = "500px", echo = FALSE}
-knitr::include_graphics("images/LC-MS-data.png")
-```
-</div>
-
-## MS data handling with `MSnbase`
-
-- Extract a single spectrum with `data[[3]]`.
-
-<div style="position:absolute; left:20%; top:40%">
-```{r out.width = "500px", echo = FALSE}
-knitr::include_graphics("images/LC-MS-data-spectrum.png")
-```
-</div>
-
-
-## MS data handling with `MSnbase`
-
-- Extract chromatographic data: `chromatogram(data, mz = mz, rt = rt)`.
-
-<div style="position:absolute; left:20%; top:40%">
-```{r out.width = "500px", echo = FALSE}
-knitr::include_graphics("images/LC-MS-data-chromatogram1.png")
-```
-</div>
-
-## MS data handling with `MSnbase`
-
-- Extract chromatographic data: `chromatogram(data, mz = mz, rt = rt)`.
-
-<div style="position:absolute; left:20%; top:40%">
-```{r out.width = "500px", echo = FALSE}
-knitr::include_graphics("images/LC-MS-data-chromatogram2.png")
-```
-</div>
-
-
-## MS data handling with `MSnbase`
-
-- Extract chromatographic data: `chromatogram(data, mz = mz, rt = rt)`.
-- Intensities aggregated along m/z dimension.
-
-<div style="position:absolute; left:20%; top:40%">
-```{r out.width = "500px", echo = FALSE}
-knitr::include_graphics("images/LC-MS-data-chromatogram3.png")
-```
-</div>
 
 
 ## LC-MS data analysis with `xcms` {.build}
@@ -312,7 +264,7 @@ chromPeaks(dda_data, mz = 304.1131, ppm = 20)
 ex_spectra <- dda_spectra[mcols(dda_spectra)$peak_id == "CP53"]
 ```
 
-## Analyzing DDA data with `xcms` {.build}
+## Analyzing DDA data with `xcms` {.build .smaller}
 
 ```{r message = FALSE, warning = FALSE, echo = FALSE}
 ex_spectra
@@ -325,7 +277,7 @@ ex_spectrum <- combineSpectra(ex_spectra, method = consensusSpectrum,
 ex_spectrum
 ```
 
-## Analyzing DDA data with `xcms` {.build}
+## Analyzing DDA data with `xcms` {.build .smaller}
 
 - Compare the consensus spectrum against 2 candidates with same m/z.
 
@@ -530,17 +482,17 @@ swath_data <- findChromPeaksIsolationWindow(swath_data, param = cwp)
 
 ## Analyzing SWATH data with `xcms` {.build}
 
+- Reconstructing MS2 spectrum from SWATH data:
+
 ```{r message = FALSE}
 swath_spectra <- reconstructChromPeakSpectra(swath_data, minCor = 0.9)
 ```
-- For each MS1 chromatographic peak:
 
-- Find MS2 peaks (within the correct isolation window) with similar
+> - For each MS1 chromatographic peak:
+> - Find MS2 peaks (within the correct isolation window) with similar
   retention time.
-
-- Correlate peak shape of MS1 and candidate MS2 peaks.
-
-- Reconstruct the MS2 spectra based on matching MS2 peaks' m/z and intensity.
+> - Correlate peak shape of MS1 and candidate MS2 peaks.
+> - Reconstruct the MS2 spectra based on matching MS2 peaks' m/z and intensity.
 
 ## Analyzing SWATH data with `xcms` {.build}
 
@@ -548,13 +500,28 @@ swath_spectra <- reconstructChromPeakSpectra(swath_data, minCor = 0.9)
 swath_spectra
 ```
 
-## Analyzing SWATH data with `xcms`
+## Analyzing SWATH data with `xcms` {.build .smaller}
 
-- Example compound, mirror plot against DDA and Metlin.
+- Example: reconstructed MS2 spectrum for Fenamiphos.
+```{r}
+chromPeaks(swath_data, mz = 304.1131, ppm = 20, msLevel = 1L)
+swath_sp <- swath_spectra[mcols(swath_spectra)$peak_id == "CP35"]
+swath_sp
+```
+
+## Analyzing SWATH data with `xcms` {.build .smaller}
+
+```{r fig.width = 8, fig.height = 4}
+par(mfrow = c(1, 2))
+plot(swath_sp[[1]], ex_spectrum, main = "DDA", tolerance = 40e-6)
+plot(swath_sp[[1]], fenamiphos, main = "Fenamiphos", tolerance = 40e-6)
+```
+
 
 ## Annotating MS2 spectra {.build}
 
-- Export spectra and peak/feature intensities to GNPS.
+- Export spectra and peak/feature intensities for *Feature-based molecular
+  networking* with GNPS (image from GNPS).
 
 - Compare `Spectra` against reference `Spectra`.
 
@@ -565,7 +532,9 @@ swath_spectra
 
 ## Future developments {.build}
 
-- [RforMassSpectrometry](https://RforMassSpectrometry.org)
+- [RforMassSpectrometry](https://RforMassSpectrometry.org):
+- Define a common, flexible, expandable and well documented infrastructure for
+  Mass Spectrometry data in R.
 - Introduction of *backends*: independence between functionality and data
   source.
 - Backend could be a database providing reference MS2 spectra.
