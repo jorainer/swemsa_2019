@@ -448,7 +448,32 @@ knitr::include_graphics("images/SWATH-21.png")
 <!-- SWATH intro done -->
 
 
-## Analyzing SWATH data with `xcms` {.build}
+## Analyzing SWATH data with `xcms` {.build .smaller}
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+swath_file <- system.file("TripleTOF-SWATH",
+                          "PestMix1_SWATH.mzML",
+                          package = "msdata")
+
+swath_data <- readMSData(swath_file, mode = "onDisk")
+```
+
+<div>
+- Chromatographic peak detection in MS1.
+```{r message = FALSE, warning = FALSE}
+cwp <- CentWaveParam(snthresh = 5, noise = 100, ppm = 10,
+                     peakwidth = c(3, 30))
+swath_data <- findChromPeaks(swath_data, param = cwp)
+```
+</div>
+<div style="position:absolute; left:15%; top:55%">
+```{r out.width = "600px", echo = FALSE}
+knitr::include_graphics("images/SWATH-MS1.png")
+```
+</div>
+
+
+## Analyzing SWATH data with `xcms` {.smaller}
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 swath_file <- system.file("TripleTOF-SWATH",
@@ -475,10 +500,46 @@ cwp <- CentWaveParam(snthresh = 3, noise = 10, ppm = 10,
 swath_data <- findChromPeaksIsolationWindow(swath_data, param = cwp)
 ```
 
-## Analyzing SWATH data with `xcms` {.build}
+<div style="position:absolute; left:15%; top:55%">
+```{r out.width = "600px", echo = FALSE}
+knitr::include_graphics("images/SWATH-MS2.png")
+```
+</div>
 
-- Image of SWATH with identified peaks.
-- Associate MS2 peaks with MS1 peak and reconstruct MS2 spectrum.
+
+## Analyzing SWATH data with `xcms` {.smaller}
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+swath_file <- system.file("TripleTOF-SWATH",
+                          "PestMix1_SWATH.mzML",
+                          package = "msdata")
+
+swath_data <- readMSData(swath_file, mode = "onDisk")
+```
+
+- Chromatographic peak detection in MS1.
+```{r message = FALSE, warning = FALSE}
+cwp <- CentWaveParam(snthresh = 5, noise = 100, ppm = 10,
+                     peakwidth = c(3, 30))
+swath_data <- findChromPeaks(swath_data, param = cwp)
+```
+
+```{r echo = FALSE}
+cwp <- CentWaveParam(snthresh = 3, noise = 10, ppm = 10,
+                     peakwidth = c(3, 30))
+```
+
+- Chromatographic peak detection in MS2 (within each isolation window).
+```{r message = FALSE, warning = FALSE}
+swath_data <- findChromPeaksIsolationWindow(swath_data, param = cwp)
+```
+
+<div style="position:absolute; left:15%; top:55%">
+```{r out.width = "600px", echo = FALSE}
+knitr::include_graphics("images/SWATH-MS1-MS2.png")
+```
+</div>
+
 
 ## Analyzing SWATH data with `xcms` {.build}
 
@@ -488,11 +549,13 @@ swath_data <- findChromPeaksIsolationWindow(swath_data, param = cwp)
 swath_spectra <- reconstructChromPeakSpectra(swath_data, minCor = 0.9)
 ```
 
-> - For each MS1 chromatographic peak:
-> - Find MS2 peaks (within the correct isolation window) with similar
-  retention time.
-> - Correlate peak shape of MS1 and candidate MS2 peaks.
-> - Reconstruct the MS2 spectra based on matching MS2 peaks' m/z and intensity.
+- For each MS1 chromatographic peak:
+
+  <div>- Find MS2 peaks (within the correct isolation window) with similar
+      retention time.</div>
+  <div>- Correlate peak shape of MS1 and candidate MS2 peaks.</div>
+
+  - Reconstruct the MS2 spectra based on matching MS2 peaks' m/z and intensity.
 
 ## Analyzing SWATH data with `xcms` {.build}
 
@@ -518,27 +581,87 @@ plot(swath_sp[[1]], fenamiphos, main = "Fenamiphos", tolerance = 40e-6)
 ```
 
 
-## Annotating MS2 spectra {.build}
+## Annotating MS2 spectra {.build .smaller}
 
-- Export spectra and peak/feature intensities for *Feature-based molecular
-  networking* with GNPS (image from GNPS).
-
+<div>
+- Export spectra and peak/feature intensities for [Feature-Based Molecular
+  Networking](https://ccms-ucsd.github.io/GNPSDocumentation/featurebasedmolecularnetworking-with-xcms3/)
+  with GNPS (image from GNPS).
+</div>
+<div>
 - Compare `Spectra` against reference `Spectra`.
+</div>
+<div>
+- [CompoundDb](https://github.com/EuracBiomedicalResearch/CompoundDb): create
+  and use compound annotation databases:
+  - Simple base object and database layout.
+</div>
 
+<div style="position:absolute; left:25%; top:55%">
+```{r out.width = "400px", echo = FALSE}
+knitr::include_graphics("images/CompoundDb-01.png")
+```
+</div>
+
+## Annotating MS2 spectra {.smaller}
+
+<div>
+- Export spectra and peak/feature intensities for [Feature-Based Molecular
+  Networking](https://ccms-ucsd.github.io/GNPSDocumentation/featurebasedmolecularnetworking-with-xcms3/)
+  with GNPS (image from GNPS).
+</div>
+<div>
+- Compare `Spectra` against reference `Spectra`.
+</div>
+<div>
 - [CompoundDb](https://github.com/EuracBiomedicalResearch/CompoundDb): create
   and use compound annotation databases:
   - Simple base object and database layout.
   - Other Objects extending the base object providing additional annotations.
+</div>
+
+<div style="position:absolute; left:25%; top:55%">
+```{r out.width = "400px", echo = FALSE}
+knitr::include_graphics("images/CompoundDb-02.png")
+```
+</div>
+
+## Annotating MS2 spectra {.smaller}
+
+<div>
+- Export spectra and peak/feature intensities for [Feature-Based Molecular
+  Networking](https://ccms-ucsd.github.io/GNPSDocumentation/featurebasedmolecularnetworking-with-xcms3/)
+  with GNPS (image from GNPS).
+</div>
+<div>
+- Compare `Spectra` against reference `Spectra`.
+</div>
+<div>
+- [CompoundDb](https://github.com/EuracBiomedicalResearch/CompoundDb): create
+  and use compound annotation databases:
+  - Simple base object and database layout.
+  - Other Objects extending the base object providing additional annotations.
+</div>
+
+<div style="position:absolute; left:25%; top:55%">
+```{r out.width = "400px", echo = FALSE}
+knitr::include_graphics("images/CompoundDb-03.png")
+```
+</div>
 
 ## Future developments {.build}
 
-- [RforMassSpectrometry](https://RforMassSpectrometry.org):
-- Define a common, flexible, expandable and well documented infrastructure for
-  Mass Spectrometry data in R.
+- [https://RforMassSpectrometry.org](https://RforMassSpectrometry.org):
+
+- Define a efficient, expandable, flexible and well documented infrastructure
+  for Mass Spectrometry data in R.
+
+- Implementation of general spectrum functionality: comparison, joining, ...
+
 - Introduction of *backends*: independence between functionality and data
   source.
+  
 - Backend could be a database providing reference MS2 spectra.
-- Implementation of general spectrum functionality: comparison, joining, ...
 
 - Put here an image of Backend thing.
 
