@@ -44,6 +44,9 @@ fn <- paste0("file://", normalizePath("metabolomics.html"))
 rmdshot("metabolomics.Rmd", "metabolomics.pdf")
 -->
 
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+library(xcms)
+```
 
 ## LC-MS data analysis with `xcms` {.build}
 
@@ -79,7 +82,8 @@ rmdshot("metabolomics.Rmd", "metabolomics.pdf")
 </div>
 
 <div style="position:absolute; top:80%; width:90%;">
-- **don't use defaults!** [Metabolomics data pre-processing using xcms](https://github.com/jorainer/metabolomics2018).
+- **don't use defaults!** See [Metabolomics data pre-processing using
+xcms](https://github.com/jorainer/metabolomics2018) workshop.
 </div>
 
 ## {.build}
