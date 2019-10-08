@@ -1,9 +1,10 @@
 ---
-title: "LC-MS data handling with `MSnbase` and `xcms`"
+title: "LC-MS/MS data handling with xcms"
 author: "Johannes Rainer<br><strong>Eurac Research</strong>, Bolzano, Italy<br>johannes.rainer@eurac.edu - github: jorainer - twitter: jo_rainer"
 date: "SWEMSA 2019"
 output: 
   ioslides_presentation:
+    logo: images/eurac_research.png
     widescreen: false
     fig_width: 7
     fig_height: 5
@@ -43,146 +44,28 @@ fn <- paste0("file://", normalizePath("metabolomics.html"))
 rmdshot("metabolomics.Rmd", "metabolomics.pdf")
 -->
 
-## Content
-
-- Introduction.
-- MS data handling, LC-MS data processing with `xcms`.
-- LC-MS/MS data processing with `xcms`.
-
-## |
-
-```{r out.width = "600px", echo = FALSE}
-knitr::include_graphics("images/Rlogo.png")
-```
-
-
-## R and Bioconductor {.build}
-
-<div>- R: free software environment for statistical computing.</div>
-<div>- Credo: **don't re-implement the wheel**.</div>
-<div>- *Rmarkdown*: perfect tool to enable reproducible research.</div>
-<div>- Bioconductor: R packages for biological data analysis.</div>
-<div>- [Stanstrup et al. Metabolites 2019](https://doi.org/10.3390/metabo9100200).
-
-```{r out.width = "480px", echo = FALSE}
-knitr::include_graphics("images/metaRbolomics.png")
-```
-</div>
-
-<div style="position:absolute; left:30%; top:40%;">
-```{r out.width = "350px", echo = FALSE}
-knitr::include_graphics("images/mass_spec_pkgs.png")
-```
-</div>
-
-## MS data handling with `MSnbase` {.notransition}
-
-<div style="position:absolute; left:30%; top:40%">
-```{r out.width = "350px", echo = FALSE}
-knitr::include_graphics("images/MSnExp-mzML.png")
-```
-</div>
-
-## MS data handling with `MSnbase` {.notransition}
-
-- `readMSData`: read MS data from raw files.
-
-<div style="position:absolute; left:30%; top:40%">
-```{r out.width = "350px", echo = FALSE}
-knitr::include_graphics("images/MSnExp-readHeader.png")
-```
-</div>
-
-## MS data handling with `MSnbase` {.notransition}
-
-- `readMSData`: read MS data from raw files.
-
-<div style="position:absolute; left:30%; top:40%">
-```{r out.width = "350px", echo = FALSE}
-knitr::include_graphics("images/MSnExp-readData.png")
-```
-</div>
-
-## MS data handling with `MSnbase` {.notransition}
-
-- `readMSData`: read MS data from raw files.
-
-<div style="position:absolute; left:30%; top:40%">
-```{r out.width = "350px", echo = FALSE}
-knitr::include_graphics("images/MSnExp-user.png")
-```
-</div>
-
-## MS data handling with `MSnbase` {.notransition}
-
-- `readMSData`: read MS data from raw files.
-- Alternative for *memory hungry* `MSnExp`: *on-disk* mode.
-
-<div style="position:absolute; left:30%; top:40%">
-```{r out.width = "350px", echo = FALSE}
-knitr::include_graphics("images/OnDiskMSnExp-readHeader.png")
-```
-</div>
-
-## MS data handling with `MSnbase` {.notransition}
-
-- `readMSData`: read MS data from raw files.
-- Alternative for *memory hungry* `MSnExp`: *on-disk* mode.
-- Same user interface, but reads peak data on-demand.
-
-<div style="position:absolute; left:30%; top:40%">
-```{r out.width = "350px", echo = FALSE}
-knitr::include_graphics("images/OnDiskMSnExp-readData.png")
-```
-</div>
-
-
-## MS data handling with `MSnbase` {.build}
-
-```{r hidden-centroiding, echo = FALSE, warning = FALSE, message = FALSE}
-library(xcms)
-library(magrittr)
-register(SerialParam(), default = TRUE) 
-fls <- dir(system.file("sciex", package = "msdata"), full.names = TRUE)
-
-## Define a data.frame with additional information on the files.
-pd <- data.frame(file = basename(fls), injection_idx = c(1, 19),
-                 sample = c("POOL_1", "POOL_2"), group = "POOL")
-## Read the data
-data <- readMSData(fls, pdata = new("NAnnotatedDataFrame", pd), 
-                   mode = "onDisk")
-```
-
-<div>- But what if we change the peak data?</div>
-<div>- Example: smoothing and centroiding
-```{r centroiding, warning = FALSE, message = FALSE}
-data <- data %>%
-    smooth(method = "SavitzkyGolay", halfWindowSize = 6) %>%
-    pickPeaks()
-```
-</div>
-
-<div>- How does that work?</div>
-<div>- *Lazy evaluation queue*: data manipulations applied on-the-fly.</div>
-
 
 ## LC-MS data analysis with `xcms` {.build}
 
 <div>
-<div style="position:absolute; top:25%; width:60%;">
+- `xcms`: toolbox for LC-MS data analysis.
+</div>
+
+<div>
+<div style="position:absolute; top:35%; width:60%;">
 - Chromatographic peak detection: `findChromPeaks`.
 </div>
-<div style="position:absolute; top:7%; left:66%;">
-<img style="width: 300px" src="images/LC-MS-data-chrompeaks.png"/>
+<div style="position:absolute; top:20%; left:62%;">
+<img style="width: 270px" src="images/LC-MS-data-chrompeaks.png"/>
 </div>
 </div>
 
 <div>
-<div style="position:absolute; top:45%; width:60%;">
+<div style="position:absolute; top:50%; width:60%;">
 - Alignment: `adjustRtime`.
 </div>
-<div style="position:absolute; top:30%; left:40%;">
-<img style="width: 250px" src="images/alignment.png"/>
+<div style="position:absolute; top:39%; left:47%;">
+<img style="width: 200px" src="images/alignment.png"/>
 </div>
 </div>
 
@@ -190,38 +73,22 @@ data <- data %>%
 <div style="position:absolute; top:65%; width:60%;">
 - Correspondence: `groupChromPreaks`.
 </div>
-<div style="position:absolute; top:52%; left:62%;">
-<img style="width: 350px" src="images/correspondence2_03.png"/>
+<div style="position:absolute; top:55%; left:62%;">
+<img style="width: 320px" src="images/correspondence2_03.png"/>
 </div>
 </div>
 
-<div style="position:absolute; top:80%;">
-- Result: `matrix` with feature abundances in samples.
+<div style="position:absolute; top:80%; width:90%;">
+- **don't use defaults!** [Metabolomics data pre-processing using xcms](https://github.com/jorainer/metabolomics2018).
 </div>
 
-## |
+## {.build}
 
-<div style="position:absolute; left:25%; top:33%;font-size: 400%;">
-**Don't use defaults**
-</div>
-
-## Peak detection on EICs
-
-## | **Evaluate correspondence analysis settings**
-
-- use `plotChromPeakDensity`.
-
-## |
-
-<div style="position:absolute; left:17%; top:33%; font-size: 150%; width: 66%"> 
-**Annotating chromatographic peaks and features remains a big challenge.**
-</div>
-
-## Analyzing LC-MS/MS data with `xcms` {.build}
-
-- MS2 spectra can aid annotation.
-- By extending `MSnbase`, `xcms` now supports also MSn data!
-- Example workflows for DDA and SWATH data.
+<div>- Result: `matrix` with feature abundances in samples.</div>
+<div>- Annotation of features from LC-MS experiments challenging.</div>
+<div>- LC-MS/MS data: MS2 spectra assist in annotation.</div>
+<div>- Different technologies available...</div>
+<div>- Added support for LC-MS/MS data analysis in `xcms`.</div>
 
 ## Analyzing DDA data with `xcms` {.build}
 
@@ -554,8 +421,9 @@ swath_spectra <- reconstructChromPeakSpectra(swath_data, minCor = 0.9)
   <div>- Find MS2 peaks (within the correct isolation window) with similar
       retention time.</div>
   <div>- Correlate peak shape of MS1 and candidate MS2 peaks.</div>
-
-  - Reconstruct the MS2 spectra based on matching MS2 peaks' m/z and intensity.
+  <div>- Reconstruct the MS2 spectra based on matching MS2 peaks' m/z and
+      intensity.</div>
+	  
 
 ## Analyzing SWATH data with `xcms` {.build}
 
@@ -581,91 +449,99 @@ plot(swath_sp[[1]], fenamiphos, main = "Fenamiphos", tolerance = 40e-6)
 ```
 
 
-## Annotating MS2 spectra {.build .smaller}
+## Annotating MS2 spectra {.build}
 
 <div>
+<div style="width: 75%;">
 - Export spectra and peak/feature intensities for [Feature-Based Molecular
   Networking](https://ccms-ucsd.github.io/GNPSDocumentation/featurebasedmolecularnetworking-with-xcms3/)
-  with GNPS (image from GNPS).
 </div>
-<div>
-- Compare `Spectra` against reference `Spectra`.
-</div>
-<div>
-- [CompoundDb](https://github.com/EuracBiomedicalResearch/CompoundDb): create
-  and use compound annotation databases:
-  - Simple base object and database layout.
-</div>
-
-<div style="position:absolute; left:25%; top:55%">
-```{r out.width = "400px", echo = FALSE}
-knitr::include_graphics("images/CompoundDb-01.png")
+<div style="position:absolute; left:73%; top:22%">
+```{r out.width = "200px", echo = FALSE}
+knitr::include_graphics("images/gnps_logo.png")
 ```
 </div>
-
-## Annotating MS2 spectra {.smaller}
-
-<div>
-- Export spectra and peak/feature intensities for [Feature-Based Molecular
-  Networking](https://ccms-ucsd.github.io/GNPSDocumentation/featurebasedmolecularnetworking-with-xcms3/)
-  with GNPS (image from GNPS).
-</div>
-<div>
-- Compare `Spectra` against reference `Spectra`.
-</div>
-<div>
-- [CompoundDb](https://github.com/EuracBiomedicalResearch/CompoundDb): create
-  and use compound annotation databases:
-  - Simple base object and database layout.
-  - Other Objects extending the base object providing additional annotations.
 </div>
 
-<div style="position:absolute; left:25%; top:55%">
-```{r out.width = "400px", echo = FALSE}
-knitr::include_graphics("images/CompoundDb-02.png")
-```
+<div>
+- Compare `Spectra` against reference `Spectra`:
+  - import from mgf files.
+  - extract from a
+  [CompoundDb](https://github.com/EuracBiomedicalResearch/CompoundDb) (R package
+  to create and use compound annotation databases).
+  - ...
 </div>
 
-## Annotating MS2 spectra {.smaller}
-
-<div>
-- Export spectra and peak/feature intensities for [Feature-Based Molecular
-  Networking](https://ccms-ucsd.github.io/GNPSDocumentation/featurebasedmolecularnetworking-with-xcms3/)
-  with GNPS (image from GNPS).
-</div>
-<div>
-- Compare `Spectra` against reference `Spectra`.
-</div>
-<div>
-- [CompoundDb](https://github.com/EuracBiomedicalResearch/CompoundDb): create
-  and use compound annotation databases:
-  - Simple base object and database layout.
-  - Other Objects extending the base object providing additional annotations.
-</div>
-
-<div style="position:absolute; left:25%; top:55%">
-```{r out.width = "400px", echo = FALSE}
-knitr::include_graphics("images/CompoundDb-03.png")
-```
-</div>
 
 ## Future developments {.build}
 
-- [https://RforMassSpectrometry.org](https://RforMassSpectrometry.org):
+<div>
+<div style="position:absolute; left:65%; top:20%">
+```{r out.width = "200px", echo = FALSE}
+knitr::include_graphics("images/R4MassSpec-logo.png")
+```
+</div>
+- [https://RforMassSpectrometry.org](https://RforMassSpectrometry.org)
+</div>
 
-- Define a efficient, expandable, flexible and well documented infrastructure
+<div>
+<div style="width: 65%;">
+- Define an efficient, expandable, flexible and well documented infrastructure
   for Mass Spectrometry data in R.
+</div>
+<div>
+```{r out.width = "400px", echo = FALSE}
+knitr::include_graphics("images/RforMAssSpec-00.png")
+```
+</div>
+</div>
 
-- Implementation of general spectrum functionality: comparison, joining, ...
+## 
 
 - Introduction of *backends*: independence between functionality and data
-  source.
+  origin/storage.
   
-- Backend could be a database providing reference MS2 spectra.
+```{r out.width = "500px", echo = FALSE}
+knitr::include_graphics("images/Spectra-backends-01.png")
+```
 
-- Put here an image of Backend thing.
+## 
 
-## {.build}
+- Introduction of *backends*: independence between functionality and data
+  origin/storage.
+  
+```{r out.width = "500px", echo = FALSE}
+knitr::include_graphics("images/Spectra-backends-02.png")
+```
+
+## 
+
+- Introduction of *backends*: independence between functionality and data
+  origin/storage.
+  
+```{r out.width = "500px", echo = FALSE}
+knitr::include_graphics("images/Spectra-backends-03.png")
+```
+
+## 
+
+- Introduction of *backends*: independence between functionality and data
+  origin/storage.
+  
+```{r out.width = "500px", echo = FALSE}
+knitr::include_graphics("images/Spectra-backends-04.png")
+```
+
+## 
+
+- Introduction of *backends*: independence between functionality and data
+  origin/storage.
+  
+```{r out.width = "500px", echo = FALSE}
+knitr::include_graphics("images/Spectra-backends-05.png")
+```
+
+## 
 
 <div style="position:absolute; left:15%; top:25%;font-size: 300%;">
 **Thank you for your attention**

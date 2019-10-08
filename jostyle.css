@@ -15,6 +15,13 @@ slides > slide {
   /* box-shadow:  0 3px 0 #522D80; */
 }
 
+slides > slide:not(.nobackground):before {
+    width: 50px;
+    height: 19.4px;
+    background-size: 50px 19.4px;
+    background-position: 0px 99%;
+}
+
 /* The source code blocks */
 pre {
     /* font-size: 50%; */
@@ -64,4 +71,15 @@ img {
     margin-left: auto;
     margin-right: auto;
     display: block;
+}
+
+.gdbar img {
+    width: 150px !important;
+    height: 58.25px !important;
+    margin: 4px 4px;
+}
+
+.gdbar {
+    width: 200px !important;
+    height: 70px !important;
 }
