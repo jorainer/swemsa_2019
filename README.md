@@ -5,6 +5,11 @@ This repository contains the code, data and presentation of my talk at the
 focused on LC-MS/MS data analysis with `xcms` and mentions also recent
 developments in the [RforMassSpectrometry](https://rformassspectrometry.org)
 
+The online version of the talk can be accessed
+[here](https://jorainer.github.io/swemsa_2019/xcms-ms.html).
+
+
+
 ## Extended abstract
 
 ### Handling and processing metabolomics data with Bioconductor’s MSnbase and xcms packages
