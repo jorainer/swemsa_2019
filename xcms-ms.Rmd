@@ -322,6 +322,18 @@ knitr::include_graphics("images/SWATH-20.png")
 knitr::include_graphics("images/SWATH-21.png")
 ```
 </div>
+## SWATH data
+
+<div style="position:absolute; left:10%; top:25%">
+```{r out.width = "800px", echo = FALSE}
+knitr::include_graphics("images/SWATH-21.png")
+```
+</div>
+<div style="position:absolute; top:87%;">
+```{r eval = FALSE}
+swath_data <- readMSData("PestMix1_SWATH.mzML", mode = "onDisk")
+```
+</div>
 <!-- SWATH intro done -->
 
 
@@ -551,7 +563,7 @@ knitr::include_graphics("images/Spectra-backends-04.png")
 knitr::include_graphics("images/Spectra-backends-05.png")
 ```
 
-## 
+## {.build}
 
 <div style="position:absolute; left:15%; top:25%;font-size: 300%;">
 **Thank you for your attention**
