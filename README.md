@@ -1,3 +1,5 @@
+[![DOI:10.5281/zenodo.3499649](https://zenodo.org/badge/DOI/10.5281/zenodo.3499649.svg)](https://doi.org/10.5281/zenodo.3499649)
+
 # Presentation for the SWEMSA 2019 conference
 
 This repository contains the code, data and presentation of my talk at the
@@ -8,10 +10,7 @@ developments in the [RforMassSpectrometry](https://rformassspectrometry.org)
 The online version of the talk can be accessed
 [here](https://jorainer.github.io/swemsa_2019/xcms-ms.html).
 
-To cite the talk: [![DOI:10.5281/zenodo.3499649](https://zenodo.org/badge/DOI/10.5281/zenodo.3499649.svg)](https://doi.org/10.5281/zenodo.3499649)
-
-
-[10.5281/zenodo.3499649](https://doi.org/10.5281/zenodo.3499649).
+To cite the talk: [10.5281/zenodo.3499649](https://doi.org/10.5281/zenodo.3499649).
 
 
 ## Extended abstract
