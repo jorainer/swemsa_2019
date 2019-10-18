@@ -1,7 +1,7 @@
 ---
 title: "LC-MS/MS data handling with xcms"
 author: "Johannes Rainer<br><strong>Eurac Research</strong>, Bolzano, Italy<br>johannes.rainer@eurac.edu - github: jorainer - twitter: jo_rainer"
-date: "SWEMSA 2019"
+date: "SWEMSA 2019 | <small>https://doi.org/10.5281/zenodo.3499650</small>"
 output: 
   ioslides_presentation:
     logo: images/eurac_research.png
@@ -447,12 +447,6 @@ swath_spectra <- reconstructChromPeakSpectra(swath_data, minCor = 0.9)
       intensity.</div>
 	  
 
-## Analyzing SWATH data with `xcms` {.build}
-
-```{r}
-swath_spectra
-```
-
 ## Analyzing SWATH data with `xcms` {.build .smaller}
 
 - Example: reconstructed MS2 spectrum for Fenamiphos.
@@ -474,25 +468,23 @@ plot(swath_sp[[1]], fenamiphos, main = "Fenamiphos", tolerance = 40e-6)
 ## Annotating MS2 spectra {.build}
 
 <div>
+- Compare `Spectra` against reference `Spectra`:
+  - import from mgf file(s).
+  - ... (future developments...)
+</div>
+
+<div>
 <div style="width: 75%;">
 - Export spectra and peak/feature intensities for [Feature-Based Molecular
   Networking](https://ccms-ucsd.github.io/GNPSDocumentation/featurebasedmolecularnetworking-with-xcms3/)
 </div>
-<div style="position:absolute; left:73%; top:22%">
+<div style="position:absolute; left:73%; top:43%">
 ```{r out.width = "200px", echo = FALSE}
 knitr::include_graphics("images/gnps_logo.png")
 ```
 </div>
 </div>
 
-<div>
-- Compare `Spectra` against reference `Spectra`:
-  - import from mgf files.
-  - extract from a
-  [CompoundDb](https://github.com/EuracBiomedicalResearch/CompoundDb) (R package
-  to create and use compound annotation databases).
-  - ...
-</div>
 
 
 ## Future developments {.build}
@@ -505,22 +497,26 @@ knitr::include_graphics("images/R4MassSpec-logo.png")
 </div>
 - [https://RforMassSpectrometry.org](https://RforMassSpectrometry.org)
 </div>
-
 <div>
-<div style="width: 65%;">
-- Define an efficient, expandable, flexible and well documented infrastructure
+<div style="width: 60%;">
+- Define an efficient, flexible and well documented infrastructure
   for Mass Spectrometry data in R.
 </div>
-<div>
-```{r out.width = "400px", echo = FALSE}
+<div style="position:absolute; left:60%; top:42%;">
+```{r out.width = "330px", echo = FALSE}
 knitr::include_graphics("images/RforMAssSpec-00.png")
 ```
 </div>
 </div>
+<div style="width: 60%;">
+- Provide core functionality.
+- Provide core data representations.
+- Reusable in other packages.
+</div>
 
 ## 
 
-- Introduction of *backends*: independence between functionality and data
+- Introduction of *backends*: independence between MS functionality and data
   origin/storage.
   
 ```{r out.width = "500px", echo = FALSE}
@@ -529,7 +525,7 @@ knitr::include_graphics("images/Spectra-backends-01.png")
 
 ## 
 
-- Introduction of *backends*: independence between functionality and data
+- Introduction of *backends*: independence between MS functionality and data
   origin/storage.
   
 ```{r out.width = "500px", echo = FALSE}
@@ -538,7 +534,7 @@ knitr::include_graphics("images/Spectra-backends-02.png")
 
 ## 
 
-- Introduction of *backends*: independence between functionality and data
+- Introduction of *backends*: independence between MS functionality and data
   origin/storage.
   
 ```{r out.width = "500px", echo = FALSE}
@@ -547,7 +543,7 @@ knitr::include_graphics("images/Spectra-backends-03.png")
 
 ## 
 
-- Introduction of *backends*: independence between functionality and data
+- Introduction of *backends*: independence between MS functionality and data
   origin/storage.
   
 ```{r out.width = "500px", echo = FALSE}
@@ -556,7 +552,7 @@ knitr::include_graphics("images/Spectra-backends-04.png")
 
 ## 
 
-- Introduction of *backends*: independence between functionality and data
+- Introduction of *backends*: independence between MS functionality and data
   origin/storage.
   
 ```{r out.width = "500px", echo = FALSE}
