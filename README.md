@@ -8,6 +8,10 @@ developments in the [RforMassSpectrometry](https://rformassspectrometry.org)
 The online version of the talk can be accessed
 [here](https://jorainer.github.io/swemsa_2019/xcms-ms.html).
 
+To cite the talk: [![DOI:10.5281/zenodo.3499649](https://zenodo.org/badge/DOI/10.5281/zenodo.3499649.svg)](https://doi.org/10.5281/zenodo.3499649)
+
+
+[10.5281/zenodo.3499649](https://doi.org/10.5281/zenodo.3499649).
 
 
 ## Extended abstract
