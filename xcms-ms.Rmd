@@ -569,5 +569,9 @@ knitr::include_graphics("images/Spectra-backends-05.png")
 </div>
 
 <div style="position:absolute; left:7%; top:60%;">
-**Also thanks to**: Micheal Witting, Jan Stanstrup, Steffen Neumann, Sebastian Gibb, Laurent Gatto
+**Also thanks to**: Michael Witting, Jan Stanstrup, Steffen Neumann, Sebastian Gibb, Laurent Gatto
 </div>
+
+<div style="position:absolute; left:7%; top:70%;">**Ideas? Comments?**
+https://github.com/sneumann/xcms or
+https://github.com/RforMassSpectrometry</div>
