@@ -95,6 +95,8 @@ xcms](https://github.com/jorainer/metabolomics2018) workshop.
 ## {.build}
 
 <div>- Result: `matrix` with feature abundances in samples.</div>
+<div>- Normalization and identification of features of interest: use any
+functionality available in `R`.</div>
 <div>- Annotation of features from LC-MS experiments challenging.</div>
 <div>- LC-MS/MS data: MS2 spectra assist in annotation.</div>
 <div>- Added support for LC-MS/MS data analysis in `xcms`.</div>
